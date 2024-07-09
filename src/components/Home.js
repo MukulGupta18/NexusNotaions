@@ -1,7 +1,7 @@
 import  Notes  from "./Notes";
 
 export const Home = () => {
-  
+   
   return (
     <div>
       <div className="container my-3">
@@ -46,8 +46,9 @@ export const Home = () => {
           </button>
         </form>
       </div>
+      <Notes/>
     </div>
   );
 };
 
-export default Home
+export default Home;
