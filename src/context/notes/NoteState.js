@@ -44,23 +44,10 @@ const NoteState = (props) => {
       });
 
       if (!response.ok) {
-        throw new Error(`Failed to add note: ${response.status}`);
+        throw new Error(`Failed to add note: ${response.status}`); 
       }
-
-      const json = await response.json();
-      console.log("Adding a new note", json);
-
-      const note = {
-        _id: json._id,
-        user: json.user,
-        title: json.title,
-        description: json.description,
-        tag: json.tag,
-        date: json.date,
-        __v: json.__v,
-      };
-
-      setNotes([...notes, note]);
+      const note = await response.json();
+      setNotes(notes.concat(note))
     } catch (error) {
       console.error("Error adding note:", error);
       // Handle error (e.g., show error message to user)
@@ -82,9 +69,6 @@ const NoteState = (props) => {
       if (!response.ok) {
         throw new Error(`Failed to delete note: ${response.status}`);
       }
-
-      const json = await response.json();
-      console.log("Deleting Note with Id", id, json);
 
       const updatedNotes = notes.filter((note) => note._id !== id);
       setNotes(updatedNotes);
@@ -110,10 +94,6 @@ const NoteState = (props) => {
       if (!response.ok) {
         throw new Error(`Failed to edit note: ${response.status}`);
       }
-
-      const json = await response.json();
-      console.log("Editing Note with Id", id, json);
-
       const updatedNotes = notes.map((note) =>
         note._id === id ? { ...note, title, description, tag } : note
       );
