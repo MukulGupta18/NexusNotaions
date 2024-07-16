@@ -35,8 +35,8 @@ const Login = (props) => {
       };
 
     return (
-        <div>
-            <h1 >Login to Continue Your Notes</h1>
+        <div className='mt-2'>
+            <h1 className="my-2">Login to Continue Your Notes</h1>
             <form onSubmit={handleSubmit}>
                 <div className="d-flex flex-row align-items-center mb-4">
                 <i className="fas fa-envelope fa-lg me-3 fa-fw"></i>

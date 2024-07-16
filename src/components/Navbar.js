@@ -3,17 +3,17 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
     let navigate = useNavigate();
-    const handleLogout = ()=>{
-        localStorage.removeItem('auth-token');
-        navigate('/Login')
+    let location = useLocation(); // Added this line
 
+    const handleLogout = () => {
+        localStorage.removeItem('auth-token');
+        navigate('/login');
     }
-    let location = useLocation();
 
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <div className="container-fluid">
-                <Link className="navbar-brand" to="/">NexusNotaion</Link>
+                <Link className="navbar-brand" to="/">NexusNotation</Link>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
@@ -26,10 +26,17 @@ const Navbar = () => {
                             <Link className={`nav-link ${location.pathname === "/about" ? "active" : ""}`} to="/about">About</Link>
                         </li>
                     </ul>
-                {!localStorage.getItem('auth-token')?   <form className="d-flex" role="search">
-                    <Link className="btn btn-primary mx-1" to="/login" role="button">Login</Link>
-                    <Link className="btn btn-primary mx-1" to= "/signup" role="button">Signup</Link>
-                    </form> : <button onClick={handleLogout} className='btn btn-primary'>Logout</button>}
+                    {!localStorage.getItem('auth-token') ? (
+                        <form className="d-flex" role="search">
+                            {location.pathname === '/login' ? ( // Added this conditional check
+                                <Link className="btn btn-primary mx-1" to="/signup" role="button">Signup</Link> // Added this line
+                            ) : ( // Added this else condition
+                                <Link className="btn btn-primary mx-1" to="/login" role="button">Login</Link> // Existing line moved here
+                            )}
+                        </form>
+                    ) : (
+                        <button onClick={handleLogout} className='btn btn-primary'>Logout</button>
+                    )}
                 </div>
             </div>
         </nav>
